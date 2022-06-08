@@ -8,7 +8,7 @@ def connection():
     s = 'localhost' #server name
     d = 'vehicles' #database name
     u = 'postgres' # username
-    p = 'password' #password
+    p = 'bigger' #password
     conn = psycopg2.connect(host=s, database=d, user=u, password=p)
     return conn
 
@@ -59,6 +59,15 @@ def updatecar(id):
         conn.close()
         return redirect('/')
     pass
+
+@carsales.route('/deletecar/<int:id>')
+def deletecar(id):
+    conn = connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM Barcars WHERE id = %s", (str(id)))
+    conn.commit()
+    conn.close()
+    return redirect('/')
     
 
 if __name__ == '__main__':
